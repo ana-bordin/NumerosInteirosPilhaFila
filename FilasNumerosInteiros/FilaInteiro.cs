@@ -1,57 +1,60 @@
-﻿namespace PilhasNumerosInteiros
+﻿namespace FilasNumerosInteiros
 {
-    internal class PilhaDeInteiros
+    internal class FilaInteiro
     {
-        NumeroInteiro Topo;
-        public PilhaDeInteiros()
+        NumeroInteiro Head;
+        NumeroInteiro Tail;
+        public FilaInteiro()
         {
-            Topo = null;
+            Head = null;
+            Tail = null;
         }
         bool IsEmpty()
         {
-            return Topo == null;
+            return Head == null && Tail == null;
         }
         string MessageEmpty()
         {
-            return "Pilha Vazia!";
+            return "Fila Vazia!";
         }
         public void Push(NumeroInteiro aux)
         {
             if (IsEmpty())
-                Topo = aux;
+                Head = Tail = aux;
             else
             {
-                aux.SetPrevious(Topo);
-                Topo = aux;
+                Tail.SetNext(aux);
+                Tail = aux;
             }
         }
         public void Print()
         {
-            NumeroInteiro aux = Topo;
+            int qtdElementos = 0;
             if (IsEmpty())
                 MessageEmpty();
             else
             {
+                NumeroInteiro aux = Head;
                 do
                 {
                     Console.WriteLine(aux.ToString());
-                    aux = aux.GetPrevious();
-                } while (aux != null);
+                    aux = aux.GetNext();
+                } while (aux != Tail.GetNext());
             }
         }
         public int RunOver()
         {
             int qtdElementos = 0;
-            NumeroInteiro aux = Topo;
             if (IsEmpty())
                 MessageEmpty();
             else
             {
+                NumeroInteiro aux = Head;
                 do
                 {
-                    aux = aux.GetPrevious();
+                    aux = aux.GetNext();
                     qtdElementos++;
-                } while (aux != null);
+                } while (aux != Tail.GetNext());
             }
             return qtdElementos;
         }
@@ -62,33 +65,33 @@
                 MessageEmpty();
             else
             {
-                NumeroInteiro aux = Topo;
+                NumeroInteiro aux = Head;
                 int maior = aux.GetNumber();
                 int menor = aux.GetNumber();
-                while (aux.GetPrevious() != null)
-                {
-                    aux = aux.GetPrevious();
+                do
+                {  
+                    aux = aux.GetNext();
                     if (menor > aux.GetNumber())
                         menor = aux.GetNumber();
                     if (maior < aux.GetNumber())
-                        maior = aux.GetNumber();
-                }
+                        maior = aux.GetNumber();                                
+                } while (aux != Tail);
                 vetor[0] = maior;
                 vetor[1] = menor;
             }
             return vetor;
         }
-        public void CopyStack(PilhaDeInteiros pilhaCopia)
+        public void CopyStack(FilaInteiro filaCopia)
         {
             if (IsEmpty())
                 MessageEmpty();
             else
             {
-                NumeroInteiro aux = Topo;
-                while (aux != null)
+                NumeroInteiro aux = Head;
+                while (aux != Tail.GetNext())
                 {
-                    pilhaCopia.Push(new NumeroInteiro(aux.GetNumber()));
-                    aux = aux.GetPrevious();
+                    filaCopia.Push(new NumeroInteiro(aux.GetNumber()));
+                    aux = aux.GetNext();
                 }
             }
         }
@@ -99,7 +102,7 @@
                 MessageEmpty();
             else
             {
-                NumeroInteiro aux = Topo;
+                NumeroInteiro aux = Head;
                 do
                 {
                     if (aux.GetNumber() % 2 == 0)
@@ -107,10 +110,10 @@
                         Console.WriteLine(aux.ToString());
                         numPar++;
                     }
-                    aux = aux.GetPrevious();
-                } while (aux != null);
+                    aux = aux.GetNext();
+                } while (aux != Tail.GetNext());
             }
-            Console.WriteLine($"Na pilha {n} possui: {numPar}");
+            Console.WriteLine($"Na fila {n} possui: {numPar}");
         }
         public void OddNumbers(int n)
         {
@@ -120,7 +123,7 @@
                 MessageEmpty();
             else
             {
-                NumeroInteiro aux = Topo;
+                NumeroInteiro aux = Head;
                 do
                 {
                     if (aux.GetNumber() % 2 != 0)
@@ -128,11 +131,10 @@
                         Console.WriteLine(aux.ToString());
                         numImpar++;
                     }
-                    aux = aux.GetPrevious();
-                } while (aux != null);
-                Console.WriteLine($"Na pilha {n} possui: {numImpar}");
+                    aux = aux.GetNext();
+                } while (aux != Tail.GetNext());
+                Console.WriteLine($"Na fila {n} possui: {numImpar}");
             }
         }
-
     }
 }
