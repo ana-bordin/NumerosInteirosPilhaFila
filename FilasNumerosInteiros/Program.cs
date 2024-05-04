@@ -53,13 +53,12 @@
         }
         static void PovoarFila(FilaInteiro filaInteiro, int numFila)
         {
-            int contador = 0;
             int parar = 0;
             do
             {
-                filaInteiro.Push(new NumeroInteiro(new Random().Next(1, 100)));
-                contador++;
-                Console.WriteLine($"Você adicionou o {contador}º número;");
+                NumeroInteiro num = new NumeroInteiro(new Random().Next(1, 100));
+                filaInteiro.Push(num);
+                Console.WriteLine($"Você adicionou o número {num};");
                 Console.WriteLine($"Digite 0 para parar de povoar a {numFila}ª fila:");
                 parar = int.Parse(Console.ReadLine());
             } while (parar != 0);

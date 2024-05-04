@@ -53,13 +53,12 @@
         }
         static void PovoarPilha(PilhaDeInteiros pilhaDeInteiros, int numPilha)
         {
-            int contador = 0;
             int parar = 0;
             do
             {
-                pilhaDeInteiros.Push(new NumeroInteiro(new Random().Next(1, 100)));
-                contador++;
-                Console.WriteLine($"Você adicionou o {contador}º número;");
+                NumeroInteiro num = new NumeroInteiro(new Random().Next(1, 100));
+                pilhaDeInteiros.Push(num);
+                Console.WriteLine($"Você adicionou o número {num};");
                 Console.WriteLine($"Digite 0 para parar de povoar a {numPilha}ª pilha:");
                 parar = int.Parse(Console.ReadLine());
             } while (parar != 0);
